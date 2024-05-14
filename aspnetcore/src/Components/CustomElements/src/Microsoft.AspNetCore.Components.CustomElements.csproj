@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <Description>Provides a mechanism for using Blazor components as custom HTML elements.</Description>
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Components.Web" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <InteropWorkingDir>$(MSBuildThisFileDirectory)js\</InteropWorkingDir>
+    <ResolveStaticWebAssetsInputsDependsOn>
+      IncludeCompileJsOutput;
+      $(ResolveStaticWebAssetsInputsDependsOn)
+    </ResolveStaticWebAssetsInputsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="IncludeCompileJsOutput" BeforeTargets="ResolveJSModuleStaticWebAssets">
+    <ItemGroup>
+      <_JsBuildOutput Include="$(InteropWorkingDir)dist\$(Configuration)\**" Exclude="$(InteropWorkingDir)dist\.gitignore" />
+    </ItemGroup>
+
+    <DefineStaticWebAssets Condition="'@(_JsBuildOutput)' != ''"
+      SourceType="Discovered"
+      SourceId="$(PackageId)"
+      ContentRoot="$(InteropWorkingDir)dist\$(Configuration)\"
+      BasePath="_content\$(PackageId)"
+      CandidateAssets="@(_JsBuildOutput)"
+      RelativePathFilter="**.js"
+      RelativePathPattern="**"
+    >
+      <Output TaskParameter="Assets" ItemName="StaticWebAsset" />
+    </DefineStaticWebAssets>
+
+    <ItemGroup>
+      <_JsBuildOutput Include="$(InteropWorkingDir)dist\$(Configuration)\**" Exclude="$(InteropWorkingDir)dist\.gitignore" />
+      <FileWrites Include="$(_JsBuildOutput)" />
+    </ItemGroup>
+  </Target>
+
+</Project>
