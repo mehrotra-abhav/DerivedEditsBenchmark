@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="..\..\PowerShell.Common.props" />
+  <PropertyGroup>
+    <Description>PowerShell Core's Microsoft.PowerShell.Commands.Diagnostics project</Description>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <AssemblyName>Microsoft.PowerShell.Commands.Diagnostics</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\System.Management.Automation\System.Management.Automation.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);CORECLR</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CounterFileInfo.cs" />
+    <Compile Remove="CounterSample.cs" />
+    <Compile Remove="CounterSet.cs" />
+    <Compile Remove="ExportCounterCommand.cs" />
+    <Compile Remove="GetCounterCommand.cs" />
+    <Compile Remove="GetEventSnapin.cs" />
+    <Compile Remove="ImportCounterCommand.cs" />
+    <Compile Remove="PdhHelper.cs" />
+    <Compile Remove="PdhSafeHandle.cs" />
+    <Compile Remove="gen\GetEventResources.cs" />
+  </ItemGroup>
+
+</Project>
